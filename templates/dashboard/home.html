@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | Loop Guest House{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0">Dashboard</h1>
+    <a class="btn btn-primary" href="{% url 'reservations:create' %}">New Reservation</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3"><div class="card card-body"><span class="text-muted">Guests</span><strong class="fs-3">{{ guest_count }}</strong></div></div>
+    <div class="col-md-3"><div class="card card-body"><span class="text-muted">Rooms</span><strong class="fs-3">{{ room_count }}</strong></div></div>
+    <div class="col-md-3"><div class="card card-body"><span class="text-muted">Active Reservations</span><strong class="fs-3">{{ active_reservations }}</strong></div></div>
+    <div class="col-md-3"><div class="card card-body"><span class="text-muted">Payments</span><strong class="fs-3">{{ payments_total }}</strong></div></div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <h2 class="h5">Recent Reservations</h2>
+        <div class="list-group">
+            {% for reservation in recent_reservations %}
+                <a class="list-group-item list-group-item-action" href="{% url 'reservations:update' reservation.pk %}">
+                    {{ reservation.guest.full_name }} - Room {{ reservation.room.number }}
+                    <span class="badge text-bg-secondary float-end">{{ reservation.status }}</span>
+                </a>
+            {% empty %}
+                <div class="list-group-item text-muted">No reservations yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <h2 class="h5">Rooms</h2>
+        <div class="list-group">
+            {% for room in rooms %}
+                <a class="list-group-item list-group-item-action" href="{% url 'rooms:update' room.pk %}">
+                    Room {{ room.number }} - {{ room.room_type.name }}
+                    <span class="badge text-bg-info float-end">{{ room.status }}</span>
+                </a>
+            {% empty %}
+                <div class="list-group-item text-muted">No rooms yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

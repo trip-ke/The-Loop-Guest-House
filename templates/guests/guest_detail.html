@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Guest | Loop Guest House{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">{{ object.full_name }}</h1>
+    <a class="btn btn-outline-primary" href="{% url 'guests:update' object.pk %}">Edit</a>
+</div>
+
+<div class="card card-body mb-4">
+    <p><strong>Phone:</strong> {{ object.phone }}</p>
+    <p><strong>Email:</strong> {{ object.email|default:"-" }}</p>
+    <p><strong>ID:</strong> {{ object.get_id_type_display }} {{ object.id_number }}</p>
+    <p><strong>Notes:</strong> {{ object.notes|default:"-" }}</p>
+</div>
+
+<h2 class="h5">Reservation History</h2>
+<div class="list-group">
+    {% for reservation in object.reservations.all %}
+        <a class="list-group-item list-group-item-action" href="{% url 'reservations:update' reservation.pk %}">
+            Room {{ reservation.room.number }}: {{ reservation.check_in_date }} to {{ reservation.check_out_date }}
+        </a>
+    {% empty %}
+        <div class="list-group-item text-muted">No reservations yet.</div>
+    {% endfor %}
+</div>
+{% endblock %}

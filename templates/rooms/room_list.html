@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Rooms | Loop Guest House{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h3 mb-0">Rooms</h1>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-primary" href="{% url 'rooms:type-list' %}">Room Types</a>
+        <a class="btn btn-primary" href="{% url 'rooms:create' %}">Add Room</a>
+    </div>
+</div>
+
+<form class="mb-3" method="get">
+    <input class="form-control" name="q" placeholder="Search rooms" value="{{ request.GET.q }}">
+</form>
+
+<div class="row g-3">
+    {% for room in object_list %}
+        <div class="col-md-4">
+            <div class="card card-body h-100">
+                <div class="d-flex justify-content-between">
+                    <h2 class="h5">Room {{ room.number }}</h2>
+                    <span class="badge text-bg-secondary">{{ room.status }}</span>
+                </div>
+                <p class="mb-1">{{ room.room_type.name }}</p>
+                <p class="text-muted mb-3">Floor {{ room.floor|default:"-" }}</p>
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'rooms:update' room.pk %}">Edit</a>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">No rooms found.</p>
+    {% endfor %}
+</div>
+{% include "pagination.html" %}
+{% endblock %}
