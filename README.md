@@ -1,3 +1,4 @@
+
 # Loop Guest House Management System
 
 A Django 5 guest house management system for learning and building incrementally.
@@ -49,4 +50,6 @@ For PostgreSQL, create a database and update `.env`:
 
 ```text
 DATABASE_URL=postgres://USER:PASSWORD@localhost:5432/loop_guest_house
-```
+
+# The-Loop-Guest-House
+ e8011448f2e162d932085cee71b150738f5a9966
