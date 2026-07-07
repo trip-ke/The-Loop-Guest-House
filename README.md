@@ -1,7 +1,6 @@
 
 # Loop Guest House Management System
 
-A Django 5 guest house management system for learning and building incrementally.
 
 ## Current Features
 
